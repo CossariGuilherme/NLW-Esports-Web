@@ -1,6 +1,8 @@
-import { GameController } from 'phosphor-react';
+import { GameController, MagnifyingGlassPlus } from 'phosphor-react';
 import { DuoInfo } from '../components/DuoInfo'
 
+import * as Dialog from '@radix-ui/react-dialog';
+import { DuoMatch } from './DuoMatch';
 export interface DuoCardProps{
     id: string,
     hourStart: string,
@@ -14,9 +16,11 @@ export interface DuoCardProps{
 interface Props {
     data: DuoCardProps,
     onConnect: () => void,
+    discord: string,
 }
 
-export function DuoCard({ data, onConnect }: Props) {
+export function DuoCard({ data, onConnect, discord }: Props) {
+
   return (
     <div className="grid grid-cols-1 gap-5 bg-[#2A2634] w-[250px] p-7 text-white shadow-lg shadow-black/25 items-center rounded-md">
         <DuoInfo
@@ -37,13 +41,13 @@ export function DuoCard({ data, onConnect }: Props) {
         colorValue={data.useVoiceChannel ? "#34D399" : "#F87171"}
         /> 
 
-        <button
-        className="bg-violet-500 px-9 h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-violet-600" type="submit"
-        onClick={onConnect}
-        >
-        <GameController size={24}/>
-            Conectar
-        </button>
+      <Dialog.Root>
+        <Dialog.Trigger className="py-3 px-4 justify-center bg-violet-500 hover:bg-violet-600 text-white rounded flex items-center gap-3" onClick={onConnect} >
+          <DuoMatch discord={discord} />
+          <GameController size={24}/>
+          Conectar
+        </Dialog.Trigger>
+      </Dialog.Root>
     </div>
   );
 }

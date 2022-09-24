@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import logoImg from '../assets/logo-nlw-esports.svg';
-import { CreateAdModal } from '../components/CreateAdModal';
 
 import { DuoCard, DuoCardProps } from '../components/DuoCard';
 
@@ -18,9 +17,7 @@ function InfoAds() {
     const [duos, setDuos] = useState<DuoCardProps[]>([]);
     const [game, setGame] = useState<Game>();
     const [discordDuoSelected, setDiscordDuoSelected] = useState('');
-
-    console.log(duos)
-
+    
     const urlParams = window.location.pathname;
     var GameId = urlParams.substring(9, 45);
 
@@ -28,7 +25,7 @@ function InfoAds() {
         fetch(`http://localhost:3333/ads/${adsId}/discord`)
         .then(response => response.json())
         .then(data => setDiscordDuoSelected(data.discord))
-      }
+         }
 
   useEffect(() => {
     fetch(`http://localhost:3333/game/${GameId}`)
@@ -54,7 +51,7 @@ function InfoAds() {
     <div className="grid grid-cols-4 gap-6 mt-16">
       {duos.map(duos => {
         return(
-            <DuoCard key={duos.id} data={duos} onConnect={() =>getDiscordUser(duos.id)}/>
+            <DuoCard key={duos.id} discord={discordDuoSelected} data={duos} onConnect={() =>getDiscordUser(duos.id)}/>
         )
       })}
     </div>
